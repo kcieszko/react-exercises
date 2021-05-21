@@ -18,30 +18,36 @@ describe('Counter component', () => {
     expect(wrapper.find('#decr-btn').exists()).toEqual(true);
   });
   it('should increment counter', () => {
-    const btn = wrapper.find('#incr-btn');
     let counter = wrapper.find('strong');
-    btn.simulate('click');
+
+    wrapper.find('#incr-btn').simulate('click');
+    wrapper.find('#incr-btn').simulate('click');
+    wrapper.find('#incr-btn').simulate('click');
     counter = wrapper.find('strong');
-    expect(counter.text()).toBe('1');
+    expect(counter.text()).toBe('3');
   });
   it('should decrement counter', () => {
-    const btn = wrapper.find('#decr-btn');
     let counter = wrapper.find('strong');
-    btn.simulate('click');
+    wrapper.find('#decr-btn').simulate('click');
+    wrapper.find('#decr-btn').simulate('click');
     counter = wrapper.find('strong');
-    expect(counter.text()).toBe('-1');
+    expect(counter.text()).toBe('-2');
   });
-  it('should set input value', () => {
+  it('should set input value, change counter value after "change" button click and reset counter value after "reset" button click', () => {
     let input = wrapper.find('input');
     let counter = wrapper.find('strong');
-    const changeBtn = wrapper.find('#change-btn');
-
     input.simulate('change', { target: { value: '4' } });
     input = wrapper.find('input');
-
     expect(input.props().value).toBe(4);
+
+    const changeBtn = wrapper.find('#change-btn');
     changeBtn.simulate('click');
     counter = wrapper.find('strong');
     expect(counter.text()).toBe('4');
+
+    const resetBtn = wrapper.find('#reset-btn');
+    resetBtn.simulate('click');
+    counter = wrapper.find('strong');
+    expect(counter.text()).toBe('0');
   });
 });
